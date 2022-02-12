@@ -1,52 +1,33 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Login from '../views/Login.vue'
-import Home from '../views/Home.vue'
-import About from '../views/About.vue'
-import Admin from '../views/Admin.vue'
-import Protected from '../views/Protected.vue'
+import Page404 from '../views/Page404.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
-  {
-    path: '/',
-    name: 'Home',
-    component: Home
-  },
   {
     path: '/login',
     name: 'Login',
     component: Login
   },
   {
-    path: '/protected',
-    name: 'Protected',
-    component: Protected
-  },
-  {
-    path: '/about',
-    name: 'About',
-    component: About
-  },
-  {
-    path: '/admin',
-    name: 'Admin',
-    component: Admin,
-    meta: {
-      requiresAuth: true
-    }
+    path: '*',
+    name: 'Page404',
+    component: Page404
   }
 ]
 
-// router.beforeEach((to, from, next) => {
-//   if(to.matched.some(record => record.meta.requiresAuth)) {
-
-//   }
-// })
-
 const router = new VueRouter({
   routes
+})
+
+router.beforeEach((to, from, next) => {
+  if (to.name !== 'Login' &&
+    !localStorage.getItem('user') &&
+    (localStorage.getItem('user') !== 'admin' || localStorage.getItem('user') !== 'editor')) {
+    next({ name: 'Login' })
+  } else next()
 })
 
 export default router

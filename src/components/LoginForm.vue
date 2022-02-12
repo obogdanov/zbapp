@@ -2,7 +2,7 @@
 <div>
   <div class="login-wrapper">
     <div class="login-form">
-      <div class="title">Форма логина</div>
+      <div class="title">Авторизоваться</div>
       <app-input
         v-model="name"
         required
@@ -39,7 +39,7 @@ export default ({
   },
   methods: {
     login () {
-      console.log('login')
+      this.$emit('login', this.name)
     }
   }
 })
@@ -48,12 +48,6 @@ export default ({
 
 <style scoped>
   .login-wrapper {
-    height: 100vh;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
   }
 
   .login-form {
