@@ -2,7 +2,6 @@
   <div id="app">
     <app-menu
       :routes="routes"
-      v-on:updateMenu="updateRoutes"
     />
     <router-view/>
   </div>
@@ -15,23 +14,26 @@ import AppMenu from '@/components/AppMenu'
 export default {
   data () {
     return {
-      routes: this.$router.getRoutes().filter(route => route.path !== '*')
+      // routes: ''
     }
   },
   created () {
     const userRole = localStorage.getItem('user')
-    console.log(userRole)
     if (userRole) {
       userRoutes[userRole].forEach(route => {
         this.$router.addRoute(route)
       })
     }
+    const menu = this.$router.getRoutes().filter(route => route.path !== '*')
+    this.$store.dispatch('menuUpdate', menu)
   },
   methods: {
-    updateRoutes () {
-      console.log('updated')
-      this.routes = this.$router.getRoutes().filter(route => route.path !== '*')
-    }
+  },
+  computed: {
+    routes () { return this.$store.getters.getMenu }
+  },
+  updated () {
+    // this.routes = this.$router.getRoutes().filter(route => route.path !== '*')
   },
   components: {
     AppMenu
@@ -48,7 +50,7 @@ export default {
   color: #2c3e50;
 }
 
-#nav {
+nav {
   padding: 30px;
 
   a {

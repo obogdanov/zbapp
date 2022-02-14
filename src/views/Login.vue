@@ -34,9 +34,9 @@ export default {
       userRoutes[userRole].forEach(route => {
         this.$router.addRoute(route)
       })
-      // this.$router.addRoute({ path: '/protected', name: 'Protected', component: Protected })
-      console.log(this.$router.getRoutes())
-      this.$router.push('/')
+      const menu = this.$router.getRoutes().filter(route => route.path !== '*')
+      this.$store.dispatch('menuUpdate', menu)
+      this.$router.push('/home')
     },
     logout () {
       localStorage.clear()

@@ -6,7 +6,7 @@ import About from '../views/About.vue'
 
 const adminRoutes = [
   {
-    path: '/',
+    path: '/home',
     name: 'Home',
     component: Home
   },
@@ -29,7 +29,7 @@ const adminRoutes = [
 
 const editorRoutes = [
   {
-    path: '/',
+    path: '/home',
     name: 'Home',
     component: Home
   },
